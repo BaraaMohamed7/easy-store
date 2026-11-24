@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types.js';
 import { AppModule } from './../src/app.module.js';
-import { NestNodeApplication } from '@nestjs/platform-node';
+import { NestNodeApplication, NodeAdapter } from '@nestjs/platform-node';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication<App>;
@@ -13,7 +13,9 @@ describe('AppController (e2e)', () => {
       imports: [AppModule],
     }).compile();
 
-    app = moduleFixture.createNestApplication<NestNodeApplication>();
+    app = moduleFixture.createNestApplication<NestNodeApplication>(
+      new NodeAdapter(),
+    );
     await app.init();
   });
 
